@@ -19,7 +19,7 @@ const LoginForm = () => {
           <input type="checkbox" id="remember-me" />
           <label htmlFor="remember-me">Remember me</label>
         </div>
-        <Button id="submit-form" type="submit" value="Sign In" />
+        <Button id="submit-form" type="submit" value="Sign In" style="login" />
       </form>
     </div>
   );

@@ -16,6 +16,10 @@ const Header = () => {
             <i className="fa fa-user-circle"></i>
             <span> Sign In </span>
           </NavLink>
+          <NavLink className={styles.navItem} to="/">
+            <i className="fa fa-sign-out"></i>
+            <span> Sign Out </span>
+          </NavLink>
         </div>
       </nav>
     </header>
