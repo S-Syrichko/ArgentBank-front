@@ -5,9 +5,9 @@ import { itemsList } from "../../utils/homeData";
 
 const Home = () => {
   return (
-    <div className="homePage">
+    <main className={styles.home}>
       <HomeHero />
-      <section className={styles.features}>
+      <section className={styles.homeFeatures}>
         <h2 className="sr-only">Features</h2>
         {itemsList.map((key, index) => (
           <HomeItem
@@ -18,7 +18,7 @@ const Home = () => {
           />
         ))}
       </section>
-    </div>
+    </main>
   );
 };
 

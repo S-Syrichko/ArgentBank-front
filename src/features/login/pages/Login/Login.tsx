@@ -1,10 +1,13 @@
-
+import LoginForm from "../../components/LoginForm/LoginForm";
+import styles from "./Login.module.scss";
 
 const Login = () => {
     return (
-        <div>
-            Login Page
-        </div>
+        <main className={styles.login}>
+            <section className={styles.loginContent}>
+                <LoginForm />
+            </section>
+        </main>
     );
 };
 
