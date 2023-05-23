@@ -1,0 +1,12 @@
+.navItem {
+    text-decoration: none;
+    margin-right: 0.5rem;
+    border: none;
+    background-color: inherit;
+    color: inherit;
+    font-size: inherit;
+    font-weight: 700;
+    &:hover {
+      text-decoration: underline;
+    }
+  }

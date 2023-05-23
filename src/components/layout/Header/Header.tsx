@@ -1,6 +1,7 @@
 import styles from "./Header.module.scss";
 import { NavLink } from "react-router-dom";
 import logo from "../../../assets/argentBankLogo.png";
+import AppNavigation from "../AppNavigation/AppNavigation";
 
 const Header = () => {
   return (
@@ -10,17 +11,7 @@ const Header = () => {
           <img src={logo} alt="Argent Bank Logo" />
           <h1 className="sr-only">Argent Bank</h1>
         </NavLink>
-
-        <div>
-          <NavLink className={styles.navItem} to="/login">
-            <i className="fa fa-user-circle"></i>
-            <span> Sign In </span>
-          </NavLink>
-          <NavLink className={styles.navItem} to="/">
-            <i className="fa fa-sign-out"></i>
-            <span> Sign Out </span>
-          </NavLink>
-        </div>
+        <AppNavigation />
       </nav>
     </header>
   );

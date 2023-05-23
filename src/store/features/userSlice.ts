@@ -1,16 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
 export interface User {
   email: string;
   password: string;
 }
 
-
 export const loginAPI = createAsyncThunk(
   "user/loginAPI",
-  async ({ email, password }:User) => {
+  async ({ email, password }: User) => {
     try {
       const response = await axios.post(
         "http://localhost:3001/api/v1/user/login",
@@ -31,16 +29,18 @@ export const loginAPI = createAsyncThunk(
   }
 );
 
-
 export const fetchUserProfile = createAsyncThunk(
-  'user/fetchUserProfile',
+  "user/fetchUserProfile",
   async (token) => {
     try {
-      const response = await axios.get("https://localhost:3001/api/v1/user/profile", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        "https://localhost:3001/api/v1/user/profile",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       return response.data;
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -52,17 +52,24 @@ export const fetchUserProfile = createAsyncThunk(
   }
 );
 
+const initialState = {
+  loginStatus: "idle",
+  profileStatus: "idle",
+  token: null,
+  profileContent: null,
+  loginError: null as string | undefined | null,
+  profileError: null as string | undefined | null,
+};
+
 const UserSlice = createSlice({
   name: "user",
-  initialState: {
-    loginStatus: "idle",
-    profileStatus: "idle",
-    token: null,
-    profileContent: null,
-    loginError: null as string | undefined | null,
-    profileError: null as string | undefined | null,
+  initialState,
+  reducers: {
+    setToken: (state, action) => {
+      state.token = action.payload;
+    },
+    logout: () => initialState,
   },
-  reducers: {},
   extraReducers: (builder) => {
     //user/loginAPI
     builder.addCase(loginAPI.pending, (state) => {
@@ -94,5 +101,5 @@ const UserSlice = createSlice({
   },
 });
 
+export const { setToken, logout } = UserSlice.actions;
 export default UserSlice.reducer;
-
