@@ -1,64 +1,22 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from "@reduxjs/toolkit";
+import { getCookie } from "typescript-cookie";
+import { UserState } from "./DataTypes";
+import { loginAPI, fetchUserProfile, updateUserProfile } from "./thunks";
 
-export interface User {
-  email: string;
-  password: string;
-}
 
-export const loginAPI = createAsyncThunk(
-  "user/loginAPI",
-  async ({ email, password }: User) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/api/v1/user/login",
-        {
-          email,
-          password,
-        }
-      );
-      console.log(response.data);
-      return response.data;
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        throw err.response?.data;
-      } else {
-        throw err;
-      }
-    }
-  }
-);
-
-export const fetchUserProfile = createAsyncThunk(
-  "user/fetchUserProfile",
-  async (token) => {
-    try {
-      const response = await axios.get(
-        "https://localhost:3001/api/v1/user/profile",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      return response.data;
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        throw err.response?.data;
-      } else {
-        throw err;
-      }
-    }
-  }
-);
-
-const initialState = {
+const initialState: UserState = {
+  isLogged: false,
   loginStatus: "idle",
   profileStatus: "idle",
-  token: null,
-  profileContent: null,
-  loginError: null as string | undefined | null,
-  profileError: null as string | undefined | null,
+  token: getCookie("token") || null,
+  userData: {
+    id: undefined,
+    email: undefined,
+    firstName: undefined,
+    lastName: undefined,
+  },
+  loginError: null,
+  profileError: null,
 };
 
 const UserSlice = createSlice({
@@ -68,7 +26,12 @@ const UserSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
     },
-    logout: () => initialState,
+    logout: () => {
+      return {
+        ...initialState,
+        token: null,
+      };
+    },
   },
   extraReducers: (builder) => {
     //user/loginAPI
@@ -92,9 +55,29 @@ const UserSlice = createSlice({
     });
     builder.addCase(fetchUserProfile.fulfilled, (state, action) => {
       state.profileStatus = "resolved";
-      state.profileContent = action.payload;
+      state.userData.id = action.payload.body.id;
+      state.userData.email = action.payload.body.email;
+      state.userData.firstName = action.payload.body.firstName;
+      state.userData.lastName = action.payload.body.lastName;
+      state.isLogged = true;
     });
     builder.addCase(fetchUserProfile.rejected, (state, action) => {
+      state.profileStatus = "rejected";
+      state.profileError = action.error.message;
+    });
+
+    //user/updateUserProfile
+    builder.addCase(updateUserProfile.pending, (state) => {
+      state.profileStatus = "fetching";
+      state.profileError = null;
+    });
+    builder.addCase(updateUserProfile.fulfilled, (state, action) => {
+      state.profileStatus = "resolved";
+      state.userData.firstName = action.payload.body.firstName;
+      state.userData.lastName = action.payload.body.lastName;
+      state.isLogged = true;
+    });
+    builder.addCase(updateUserProfile.rejected, (state, action) => {
       state.profileStatus = "rejected";
       state.profileError = action.error.message;
     });

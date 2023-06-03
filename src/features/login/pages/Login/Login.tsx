@@ -1,19 +1,18 @@
 import { useEffect } from "react";
-import styles from "./Login.module.scss";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../../../store/store";
 import LoginForm from "../../components/LoginForm/LoginForm";
-import useCookie from "../../hooks/useCookie";
-
+import styles from "./Login.module.scss";
 
 const Login = () => {
-  const { isCookie } = useCookie();
+  const token = useAppSelector((state) => state.user.token);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isCookie) {
+    if (token) {
       navigate("/profile");
     }
-  }, [isCookie, navigate]);
+  }, [token, navigate]);
 
   return (
     <main className={styles.login}>

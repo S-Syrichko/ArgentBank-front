@@ -1,4 +1,4 @@
-import { loginAPI } from "../../../store/features/userSlice";
+import { loginAPI } from "../../../store/features/thunks";
 import { useAppDispatch } from "../../../store/store";
 
 const useLoginForm = () => {
