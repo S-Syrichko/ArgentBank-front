@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setCookie } from "typescript-cookie";
 import Button from "../../../../components/Button/Button";
 import { useAppSelector } from "../../../../store/store";
 import useLoginForm from "../../hooks/useLoginForm";
 import styles from "./LoginForm.module.scss";
-import { setCookie } from "typescript-cookie";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const { handleSubmit, resetForm } = useLoginForm();
   const [remember, setRemember] = useState<boolean>(false);
   //store
-  const loginStatus = useAppSelector(state => state.user.loginStatus);
-  const loginError = useAppSelector(state => state.user.loginError);
-  const token = useAppSelector(state => state.user.token);
+  const loginStatus = useAppSelector((state) => state.user.loginStatus);
+  const loginError = useAppSelector((state) => state.user.loginError);
+  const token = useAppSelector((state) => state.user.token);
 
   useEffect(() => {
     if (loginStatus === "resolved") {
       if (remember) {
-        setCookie("token", token, {expires: 7});
+        setCookie("token", token, { expires: 7 });
       }
       navigate("/profile");
     } else if (loginStatus === "rejected") {
@@ -46,19 +46,11 @@ const LoginForm = () => {
       <form id="login-form" onSubmit={onSubmit}>
         <div className={styles.inputWrapper}>
           <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            required
-          />
+          <input type="text" id="username" required />
         </div>
         <div className={styles.inputWrapper}>
           <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            required
-          />
+          <input type="password" id="password" required />
         </div>
         <div className={styles.inputRemember}>
           <input

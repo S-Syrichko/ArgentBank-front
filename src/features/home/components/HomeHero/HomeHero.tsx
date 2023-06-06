@@ -8,7 +8,9 @@ const HomeHero = () => {
         <p className={styles.heroSubtitle}>No fees.</p>
         <p className={styles.heroSubtitle}>No minimum deposit.</p>
         <p className={styles.heroSubtitle}>High interest rates.</p>
-        <p className={styles.heroText}>Open a savings account with Argent Bank today!</p>
+        <p className={styles.heroText}>
+          Open a savings account with Argent Bank today!
+        </p>
       </section>
     </div>
   );

@@ -1,7 +1,7 @@
-import styles from "./Home.module.scss";
 import HomeHero from "../../components/HomeHero/HomeHero";
 import HomeItem from "../../components/HomeItem/HomeItem";
 import { itemsList } from "../../utils/homeData";
+import styles from "./Home.module.scss";
 
 const Home = () => {
   return (

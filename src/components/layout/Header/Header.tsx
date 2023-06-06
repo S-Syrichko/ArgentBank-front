@@ -1,7 +1,7 @@
-import styles from "./Header.module.scss";
 import { NavLink } from "react-router-dom";
 import logo from "../../../assets/argentBankLogo.png";
 import AppNavigation from "../AppNavigation/AppNavigation";
+import styles from "./Header.module.scss";
 
 const Header = () => {
   return (

@@ -19,9 +19,9 @@ const Profile = () => {
     <main className={styles.profile}>
       <ProfileHeader />
       <h2 className="sr-only">Accounts</h2>
-      <ProfileAccount />
-      <ProfileAccount />
-      <ProfileAccount />
+      <ProfileAccount accountType="Checking (x8349)" balance="2,082.79" />
+      <ProfileAccount accountType="Savings (x6712)" balance="10,928.42" />
+      <ProfileAccount accountType="Credit Card (x8349)" balance="184.30" card />
     </main>
   );
 };

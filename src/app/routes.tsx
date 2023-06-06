@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
+import SwaggerDocs from "../components/SwaggerDocs/SwaggerDocs";
 import { HomePage } from "../features/home";
 import { LoginPage } from "../features/login";
 import { ProfilePage } from "../features/profile";
-import SwaggerDocs from "../components/SwaggerDocs/SwaggerDocs";
 
 const AppRoutes = () => {
   return (
